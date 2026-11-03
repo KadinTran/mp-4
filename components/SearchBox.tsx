@@ -20,7 +20,7 @@ export default function SearchBox() {
             );
             const result = await response.json();
             if (!response.ok) {
-                setError("Failed request")
+                setError("Could not retrieve rates. Check your currency code.")
             }
             setData(result);
         } catch (err) {
@@ -46,12 +46,10 @@ export default function SearchBox() {
                 (See Supported Codes Here)
             </StyledAnchor>
 
-            {error && <ErrorScreen>{error}</ErrorScreen>}
 
-            {data &&
-                <AllRatesDiv>
-                    <RateDisplay data={data} />
-                </AllRatesDiv>
+            {error ? (<ErrorScreen>{error}</ErrorScreen>) :
+                data ? (<AllRatesDiv> <RateDisplay data={data} /></AllRatesDiv>) :
+                null
             }
         </>
     );

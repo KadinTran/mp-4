@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Rates } from "@/types/rates";
 import {AllRatesDiv, ErrorScreen, SingleRatesDiv, StyledButton, StyledInput, StyledSearchBox} from "@/styles/styles";
+import RateDisplay from "@/components/RateDisplay";
 
 export default function Calculator() {
     const [amount, setAmount] = useState("");
@@ -19,12 +20,12 @@ export default function Calculator() {
             );
             const result = await response.json();
             if (!response.ok) {
-                setError("Failed request")
+                setError("Could not retrieve rates. Check your input amount.")
             }
             setData(result);
         } catch (err) {
             console.error(err);
-            setError("Could not retrieve rates. Check your currency code.");
+            setError("Could not retrieve rates. Check your input amount.");
         }
     }
     return (
@@ -40,22 +41,23 @@ export default function Calculator() {
                     Convert
                 </StyledButton>
             </StyledSearchBox>
-            {error && <ErrorScreen>{error}</ErrorScreen>}
-
-            {data &&
-                <AllRatesDiv>
-                    <SingleRatesDiv key={data.base_code}>
-                        <p>{data.base_code} Conversion</p>
-                        <p>US Dollars: {(Number(amount) * data.conversion_rates.USD).toFixed(2)}</p>
-                        <p>Australian Dollars: {(Number(amount) * data.conversion_rates.AUD).toFixed(2)}</p>
-                        <p>Euros: {(Number(amount) * data.conversion_rates.EUR).toFixed(2)}</p>
-                        <p>Japanese Yen: {(Number(amount) * data.conversion_rates.JPY).toFixed(2)}</p>
-                        <p>Indian Rupee: {(Number(amount) * data.conversion_rates.INR).toFixed(2)}</p>
-                        <p>Korean Won: {(Number(amount) * data.conversion_rates.KRW).toFixed(2)}</p>
-                        <p>Afghan Afghani: {(Number(amount) * data.conversion_rates.AFN).toFixed(2)}</p>
-                        <p>Vietnamese Dong: {(Number(amount) * data.conversion_rates.VND).toFixed(2)}</p>
-                    </SingleRatesDiv>
-                </AllRatesDiv>
+            {error ? (<ErrorScreen>{error}</ErrorScreen>) :
+                data ? (
+                        <AllRatesDiv>
+                            <SingleRatesDiv key={data.base_code}>
+                                <p>{data.base_code} Conversion</p>
+                                <p>US Dollars: {(Number(amount) * data.conversion_rates.USD).toFixed(2)}</p>
+                                <p>Australian Dollars: {(Number(amount) * data.conversion_rates.AUD).toFixed(2)}</p>
+                                <p>Euros: {(Number(amount) * data.conversion_rates.EUR).toFixed(2)}</p>
+                                <p>Japanese Yen: {(Number(amount) * data.conversion_rates.JPY).toFixed(2)}</p>
+                                <p>Indian Rupee: {(Number(amount) * data.conversion_rates.INR).toFixed(2)}</p>
+                                <p>Korean Won: {(Number(amount) * data.conversion_rates.KRW).toFixed(2)}</p>
+                                <p>Afghan Afghani: {(Number(amount) * data.conversion_rates.AFN).toFixed(2)}</p>
+                                <p>Vietnamese Dong: {(Number(amount) * data.conversion_rates.VND).toFixed(2)}</p>
+                            </SingleRatesDiv>
+                        </AllRatesDiv>
+                    ) :
+                    null
             }
         </>
     );
