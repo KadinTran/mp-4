@@ -14,7 +14,6 @@ const StyledLink = styled(Link)`
     background: #222233 ;
     color: #ffb5b4;
     justify-content: center;
-    //border-radius: 1.5vw;
     padding: 1%;
     margin: 1%;
 `
@@ -24,7 +23,7 @@ export default function Nav() {
         <nav>
             <StyledUL>
                 <StyledLink href="/">Home</StyledLink>
-                <StyledLink href="/search">Search Other Conversions</StyledLink>
+                <StyledLink href="/calculator">Convert USD</StyledLink>
             </StyledUL>
         </nav>
     )
