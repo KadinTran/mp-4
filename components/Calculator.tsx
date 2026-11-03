@@ -28,6 +28,7 @@ export default function Calculator() {
         } catch (err) {
             console.error(err);
             setError("Could not retrieve rates. Check your input amount.");
+            setGot(false); // if there is an error then its ok to allow another request
         }
     }
     return (
