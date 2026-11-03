@@ -32,6 +32,7 @@ export default function Calculator() {
         <>
             <StyledSearchBox>
                 <StyledInput
+                    id = "Converter"
                     type= "text"
                     placeholder="Enter Amount in USD"
                     value={amount}

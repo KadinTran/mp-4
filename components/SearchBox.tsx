@@ -33,6 +33,7 @@ export default function SearchBox() {
         <>
             <StyledSearchBox>
                 <StyledInput
+                    id = "SearchBox"
                     type="text"
                     placeholder="Enter currency code (e.g. GBP)"
                     value={code}
