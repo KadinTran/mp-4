@@ -9,6 +9,7 @@ export default function Calculator() {
     const [amount, setAmount] = useState("");
     const [data, setData] = useState<Rates | null>(null);
     const [error, setError] = useState("");
+    const [got, setGot] = useState<boolean>(false);
 
     async function getUSDRates() {
         setError("");
@@ -23,6 +24,7 @@ export default function Calculator() {
                 setError("Could not retrieve rates. Check your input amount.")
             }
             setData(result);
+            setGot(true); // if gotten once then dont get again (prevents redundant api fetch)
         } catch (err) {
             console.error(err);
             setError("Could not retrieve rates. Check your input amount.");
@@ -38,7 +40,7 @@ export default function Calculator() {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                 />
-                <StyledButton onClick={getUSDRates}>
+                <StyledButton onClick={getUSDRates} disabled = {got}>
                     Convert
                 </StyledButton>
             </StyledSearchBox>
